@@ -203,7 +203,10 @@ export default function SellerPage() {
                     <p className="text-xs text-red-600">Name is required</p>
                 )}
                 {/* contacct no */}
-                <label htmlFor="contactNo" className="font-semibold text-lg mt-3">
+                <label
+                    htmlFor="contactNo"
+                    className="font-semibold text-lg mt-3"
+                >
                     Seller contact no
                 </label>
                 <input
