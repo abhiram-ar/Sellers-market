@@ -203,8 +203,8 @@ export default function SellerPage() {
                     <p className="text-xs text-red-600">Name is required</p>
                 )}
                 {/* contacct no */}
-                <label htmlFor="contactNo" className="font-semibold text-lg">
-                    Selling Price
+                <label htmlFor="contactNo" className="font-semibold text-lg mt-3">
+                    Seller contact no
                 </label>
                 <input
                     id="contactNo"
@@ -212,7 +212,7 @@ export default function SellerPage() {
                         required: true,
                         pattern: /^[1-9][0-9]{9}/,
                     })}
-                    placeholder="contat number"
+                    placeholder="contact number"
                     className="border-2 rounded-md px-2 py-1"
                 />
                 {errors.contactNo?.type === "required" && (
