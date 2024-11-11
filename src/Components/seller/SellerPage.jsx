@@ -117,7 +117,7 @@ export default function SellerPage() {
                 )}
                 {errors.sellingPrice?.type === "max" && (
                     <p className="text-xs text-red-600">
-                        Huge Price, Contact customer support for assistance     
+                        Huge Price, Contact customer support for assistance
                     </p>
                 )}
                 <hr className="my-5" />
