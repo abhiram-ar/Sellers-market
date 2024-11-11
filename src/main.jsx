@@ -5,21 +5,26 @@ import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ItemPageBody from "./Components/ItemDetails/ItemPageBody.jsx";
 import Body from "./Components/Home/Body.jsx";
+import SellerPage from "./Components/seller/SellerPage.jsx";
 
 const appRouter = createBrowserRouter([
     {
-        path: "/",
+        path: "/home",
         element: <App />,
         children: [
             {
-                path: "/",
+                path: "/home/",
                 element: <Body />,
             },
             {
-                path: "/item",
+                path: "/home/item",
                 element: <ItemPageBody />,
             },
         ],
+    },
+    {
+        path: "/home/post",
+        element: <SellerPage/>
     },
 ]);
 
