@@ -1,12 +1,12 @@
-import Body from "./Components/Home/Body";
+import { Outlet } from "react-router-dom";
 import Footer from "./Components/Home/Footer";
 import Navbar from "./Components/Home/Navbar";
 
 export default function App() {
   return (
-   <div>
+   <div className="bg-[#f2f4f5]">
     <Navbar/>
-    <Body/>
+    <Outlet/>
     <Footer/>
    </div> 
   )

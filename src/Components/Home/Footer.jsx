@@ -7,7 +7,7 @@ import mobilityOutlook from "./../../assets/ModilityOutlook.png";
 
 export default function Footer() {
     return (
-        <div className=" mx-20 px-24 py-10 bg-[#002f34] text-white">
+        <div className=" px-24 py-10 bg-[#002f34] text-white">
             <div className="flex justify-around gap-3">
                 <img className="h-20" src={carTradeGroup} alt="" />
                 <img className="h-20" src={olx} alt="" />

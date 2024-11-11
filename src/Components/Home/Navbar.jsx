@@ -4,7 +4,7 @@ import OlxLogo from "./utils/OlxLogo";
 
 const Navbar = () => {
     return (
-        <div className="bg-[#eff1f3] flex gap-5 p-3 justify-center items-center">
+        <div className="bg-[#eff1f3] fixed w-screen flex gap-5 p-3 justify-center items-center shadow-sm z-10">
             <OlxLogo />
 
             <div className="bg-white px-2 py-3 rounded-md border-2 border-black flex items-center gap-2 ">
