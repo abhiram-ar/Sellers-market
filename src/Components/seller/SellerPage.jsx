@@ -6,11 +6,16 @@ import { useFirebase } from "../../context/firebase";
 import { useEffect, useState } from "react";
 import imagePlaceHolder from "./../../assets/imagePlaceholder.png";
 import { supabase } from "../../context/Supabase";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import Snackbar from "@mui/material/Snackbar";
 
 export default function SellerPage() {
     const [img1, setImg1] = useState(null);
     const [img2, setImg2] = useState(null);
     const [img3, setImg3] = useState(null);
+    const [isuploadingData, setIsUploadingData] = useState(false);
+    const [uploadingState, setUploadingState] = useState("");
 
     const navigate = useNavigate();
     const { currentUser } = useFirebase();
@@ -19,13 +24,25 @@ export default function SellerPage() {
         if (!currentUser) navigate("/home");
     }, [currentUser, navigate]);
 
+    useEffect(() => {
+        if (isuploadingData) document.body.style.overflowY = "hidden";
+        else document.body.style.overflowY = "unset";
+        return () => {
+            document.body.style.overflowY = "unset";
+        };
+    }, [isuploadingData]);
+
     const {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm();
 
     const postDataToDB = async (formData) => {
+
+        setIsUploadingData(true);
+        setUploadingState("Preparing Data")
         const images = [];
         const { image1, image2, image3 } = formData;
 
@@ -33,28 +50,58 @@ export default function SellerPage() {
         image2.length === 1 && images.push(uploadAndGetPath(image2[0]));
         image3.length === 1 && images.push(uploadAndGetPath(image3[0]));
 
-        // const imagePaths = [];
-        // images.forEach(async (img) => {
-        //     const { data, error } = await supabase.storage
-        //         .from("olxadpics")
-        //         .upload(
-        //             `public/${currentUser.uid}/${
-        //                 Math.floor(Math.random() * 100) + img.name
-        //             }`,
-        //             img,
-        //             { cacheControl: "3600", upsert: true }
-        //         );
-        //     if (data) {
-        //         console.log(`upaload sucessful`, data);
-        //         imagePaths.push(data.path);
-        //     }
+        console.log(formData);
+        //formDataTemplate = {
+        //     category: "car",
+        //     image1: {
+        //         0: {},
+        //     },
+        //     image2: {},
+        //     image3: {
+        //         0: {},
+        //     },
+        //     adTitle: "adasdada",
+        //     description: "dadadsfsf fasd ss sf",
+        //     sellingPrice: "222",
+        //     state: "Kerala",
+        //     sellerName: "abhura",
+        //     contactNo: "9946202959",
+        // };
 
-        //     if (error) console.log(`error while uplopad`, error);
-        // });
+        try {
+            setUploadingState("uploading images")
+            let imagePaths = await Promise.all(images);
+            console.log(`imagesupload finish`);
 
-        Promise.all(images)
-            .then(() => console.log(`sin`))
-            .catch((errors) => console.log(`error list List`, ...errors));
+            setUploadingState("finishing up")
+            console.log(`uploading db record`);
+            const record = {
+                category: formData.category,
+                ad_title: formData.adTitle,
+                description: formData.description,
+                selling_price: formData.sellingPrice,
+                location: formData.state,
+                seller_name: formData.sellerName,
+                seller_contact: formData.contactNo,
+                pics: imagePaths,
+                creator_uid: currentUser.uid,
+            };
+            const response = await supabase.from("olxads").insert(record);
+            console.log(response);
+            reset();
+            setImg1(null);
+            setImg2(null);
+            setImg3(null);
+        } catch (errors) {
+            console.log(`error uploading images or DB`, ...errors);
+        } finally {
+            setUploadingState("Ad Posted ✅")
+            setIsUploadingData(false);
+            setTimeout(() => {
+                setUploadingState("")
+            }, 3000);
+           
+        }
     };
 
     function uploadAndGetPath(img) {
@@ -83,6 +130,16 @@ export default function SellerPage() {
 
     return (
         <div className="bg-[#f7f8f9]">
+            <div className={`${uploadingState === "" ? "hidden" : ""} `}>
+                        <Snackbar open={open} message={uploadingState} />
+            </div>
+            {isuploadingData && (
+                <div className="fixed inset-0 bg-black/40 flex justify-center items-center">
+                    <Box sx={{ display: "flex" }}>
+                        <CircularProgress />
+                    </Box>
+                </div>
+            )}
             <nav className="h-20 bg-[#f7f8f9] my-auto shadow-md">
                 <button
                     onClick={() => navigate(-1)}
@@ -252,7 +309,7 @@ export default function SellerPage() {
                     id="sellingPrice"
                     {...register("sellingPrice", {
                         required: true,
-                        pattern: /^[1-9][0-9]*/,
+                        pattern: /^[1-9][0-9]*$/,
                         max: 10000000,
                     })}
                     placeholder="Selling price"
