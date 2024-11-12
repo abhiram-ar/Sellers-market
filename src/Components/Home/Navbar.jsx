@@ -1,8 +1,14 @@
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SellButton from "./SellButton";
 import OlxLogo from "./utils/OlxLogo";
+import { useFirebase } from "../../context/firebase";
 
 const Navbar = () => {
+
+    const { handleLogin, singOut currentUser } = useFirebase()
+
+    console.log(currentUser)
+
     return (
         <div className="bg-[#eff1f3] fixed w-screen flex gap-5 p-3 justify-center items-center shadow-sm z-10">
             <OlxLogo />
@@ -32,9 +38,10 @@ const Navbar = () => {
             </select>
 
             <div className="w-fit">
-                <a href="#" className="font-semibold text-lg underline">
+                {currentUser ? <button onClick={singOut} className="font-semibold text-lg underline"> : <button onClick={handleLogin} className="font-semibold text-lg underline">
+                }
                     Login
-                </a>
+                </button>
             </div>
             <div className="w-48 ">
                 <SellButton />

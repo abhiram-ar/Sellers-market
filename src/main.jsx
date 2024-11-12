@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ItemPageBody from "./Components/ItemDetails/ItemPageBody.jsx";
 import Body from "./Components/Home/Body.jsx";
 import SellerPage from "./Components/seller/SellerPage.jsx";
+import { FirebaseProvider } from "./context/firebase.jsx";
 
 const appRouter = createBrowserRouter([
     {
@@ -24,12 +25,14 @@ const appRouter = createBrowserRouter([
     },
     {
         path: "/home/post",
-        element: <SellerPage/>
+        element: <SellerPage />,
     },
 ]);
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
-        <RouterProvider router={appRouter} />
+        <FirebaseProvider>
+            <RouterProvider router={appRouter} />
+        </FirebaseProvider>
     </StrictMode>
 );
