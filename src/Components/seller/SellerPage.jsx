@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useFirebase } from "../../context/firebase";
 import { useEffect, useState } from "react";
 import imagePlaceHolder from "./../../assets/imagePlaceholder.png";
+import { supabase } from "../../context/Supabase";
 
 export default function SellerPage() {
     const [img1, setImg1] = useState(null);
@@ -24,23 +25,61 @@ export default function SellerPage() {
         formState: { errors },
     } = useForm();
 
-   
-
     const postDataToDB = async (formData) => {
-        const images = []
-        const {image1, image2, image3} = formData
-        
-        image1.length === 1 && images.push(image1[0])
-        image2.length === 1 && images.push(image2[0]);
-        image3.length === 1 && images.push(image3[0]);
+        const images = [];
+        const { image1, image2, image3 } = formData;
 
-        console.log(images);
+        image1.length === 1 && images.push(uploadAndGetPath(image1[0]));
+        image2.length === 1 && images.push(uploadAndGetPath(image2[0]));
+        image3.length === 1 && images.push(uploadAndGetPath(image3[0]));
 
-        const imagePaths = []
-        images.forEach(img => {
+        // const imagePaths = [];
+        // images.forEach(async (img) => {
+        //     const { data, error } = await supabase.storage
+        //         .from("olxadpics")
+        //         .upload(
+        //             `public/${currentUser.uid}/${
+        //                 Math.floor(Math.random() * 100) + img.name
+        //             }`,
+        //             img,
+        //             { cacheControl: "3600", upsert: true }
+        //         );
+        //     if (data) {
+        //         console.log(`upaload sucessful`, data);
+        //         imagePaths.push(data.path);
+        //     }
 
-        })
+        //     if (error) console.log(`error while uplopad`, error);
+        // });
+
+        Promise.all(images)
+            .then(() => console.log(`sin`))
+            .catch((errors) => console.log(`error list List`, ...errors));
+    };
+
+    function uploadAndGetPath(img) {
+        return new Promise((resolve, reject) => {
+            supabase.storage
+                .from("olxadpics")
+                .upload(
+                    `public/${currentUser.uid}/${
+                        Math.floor(Math.random() * 100) + img.name
+                    }`,
+                    img,
+                    { cacheControl: "3600", upsert: true }
+                )
+                .then(({ data }) => {
+                    console.log("uploaded : " + img.name);
+                    resolve(data.path);
+                })
+                .catch(({ error }) => {
+                    console.log(`error while uploading`);
+                    reject(error);
+                });
+        });
     }
+
+    //base url https://mfoduixzqibzjxlxqkhz.supabase.co/storage/v1/object/public/olxadpics/ + public...
 
     return (
         <div className="bg-[#f7f8f9]">
@@ -58,9 +97,9 @@ export default function SellerPage() {
             <form
                 className="bg-white rounded-md border flex p-10 mt-3 mb-10 w-2/5 m-auto flex-col gap-2"
                 onSubmit={handleSubmit((data) => {
-                    console.log(img1[0])
-                    console.log(data.image1[0])
-                    postDataToDB(data)
+                    console.log(img1[0]);
+                    console.log(data.image1[0]);
+                    postDataToDB(data);
                 })}
             >
                 {/* category */}

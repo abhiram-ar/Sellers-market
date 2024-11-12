@@ -9,6 +9,7 @@ import SellerPage from "./Components/seller/SellerPage.jsx";
 import { FirebaseProvider } from "./context/firebase.jsx";
 import { Redirect } from "./Components/Redirect.jsx";
 import Test from "./context/Supabase.jsx";
+import SupabaseContext from "./context/Supabase.jsx";
 
 const appRouter = createBrowserRouter([
     {
@@ -35,7 +36,7 @@ const appRouter = createBrowserRouter([
     },
     {
         path: "/test",
-        element: <Test />,
+        element: <SupabaseContext />,
     },
 ]);
 
