@@ -7,8 +7,13 @@ import ItemPageBody from "./Components/ItemDetails/ItemPageBody.jsx";
 import Body from "./Components/Home/Body.jsx";
 import SellerPage from "./Components/seller/SellerPage.jsx";
 import { FirebaseProvider } from "./context/firebase.jsx";
+import { Redirect } from "./Components/Redirect.jsx";
 
 const appRouter = createBrowserRouter([
+    {
+        path: "/",
+        element: <Redirect />,
+    },
     {
         path: "/home",
         element: <App />,

@@ -2,18 +2,32 @@ import Footer from "../Home/Footer";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useFirebase } from "../../context/firebase";
+import { useEffect } from "react";
 export default function SellerPage() {
-    const navigate = useNavigate()
+    const navigate =  useNavigate();
+    const { currentUser } = useFirebase();
 
+    console.log(currentUser)
+    useEffect(()=>{
+        if(!currentUser) navigate("/home");
+
+    },[currentUser, navigate])
+
+    
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
+
     return (
         <div className="bg-[#f7f8f9]">
             <nav className="h-20 bg-[#f7f8f9] my-auto shadow-md">
-                <button onClick={()=> navigate(-1)} className="size-10 mt-5 ml-10">
+                <button
+                    onClick={() => navigate(-1)}
+                    className="size-10 mt-5 ml-10"
+                >
                     <ArrowBackOutlinedIcon fontSize="large" />
                 </button>
             </nav>
@@ -50,7 +64,7 @@ export default function SellerPage() {
                         required: true,
                         maxLength: 79,
                         minLength: 5,
-                        pattern: /^[A-Z]+$/i,
+                        pattern: /^[A-Z][A-Z\s]*$/i,
                     })}
                     placeholder="Ad title"
                     className="border-2 rounded-md px-2 py-1"
@@ -67,6 +81,11 @@ export default function SellerPage() {
                 )}
                 {errors.adTitle?.type === "required" && (
                     <p className="text-xs text-red-600">Title is required</p>
+                )}
+                {errors.adTitle?.type === "maxLength" && (
+                    <p className="text-xs text-red-600">
+                        Max characters allowed is 79
+                    </p>
                 )}
                 <hr className="my-5" />
                 {/* description */}
@@ -186,7 +205,7 @@ export default function SellerPage() {
                         required: true,
                         maxLength: 79,
                         minLength: 3,
-                        pattern: /^[A-Z]+$/i,
+                        pattern: /^[A-Z][A-Z\s]*$/i,
                     })}
                     placeholder="Seller Name"
                     className="border-2 rounded-md px-2 py-1"
@@ -199,6 +218,11 @@ export default function SellerPage() {
                 {errors.sellerName?.type === "minLength" && (
                     <p className="text-xs text-red-600">
                         Minimum 3 characters required
+                    </p>
+                )}
+                {errors.sellerName?.type === "maxLength" && (
+                    <p className="text-xs text-red-600">
+                        Maximum only 79 characters
                     </p>
                 )}
                 {errors.sellerName?.type === "required" && (
@@ -216,6 +240,7 @@ export default function SellerPage() {
                     {...register("contactNo", {
                         required: true,
                         pattern: /^[1-9][0-9]{9}/,
+                        maxLength: 10,
                     })}
                     placeholder="contact number"
                     className="border-2 rounded-md px-2 py-1"
@@ -227,6 +252,9 @@ export default function SellerPage() {
                 )}
                 {errors.contactNo?.type === "pattern" && (
                     <p className="text-xs text-red-600">Invalid Phone number</p>
+                )}
+                {errors.contactNo?.type === "maxLength" && (
+                    <p className="text-xs text-red-600">Max 10 digits</p>
                 )}
                 <input
                     className={`bg-blue-500 w-20 px-2 py-2 rounded-md text-white font-semibold text-center mt-5 `}
