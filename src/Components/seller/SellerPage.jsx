@@ -77,11 +77,11 @@ export default function SellerPage() {
             console.log(`uploading db record`);
             const record = {
                 category: formData.category,
-                ad_title: formData.adTitle,
-                description: formData.description,
+                ad_title: formData.adTitle.trim(),
+                description: formData.description.trim(),
                 selling_price: formData.sellingPrice,
                 location: formData.state,
-                seller_name: formData.sellerName,
+                seller_name: formData.sellerName.trim(),
                 seller_contact: formData.contactNo,
                 pics: imagePaths,
                 creator_uid: currentUser.uid,

@@ -8,7 +8,6 @@ import Body from "./Components/Home/Body.jsx";
 import SellerPage from "./Components/seller/SellerPage.jsx";
 import { FirebaseProvider } from "./context/firebase.jsx";
 import { Redirect } from "./Components/Redirect.jsx";
-import Test from "./context/Supabase.jsx";
 import SupabaseContext from "./context/Supabase.jsx";
 
 const appRouter = createBrowserRouter([
@@ -41,9 +40,7 @@ const appRouter = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
-    <StrictMode>
-        <FirebaseProvider>
-            <RouterProvider router={appRouter} />
-        </FirebaseProvider>
-    </StrictMode>
+    <FirebaseProvider>
+        <RouterProvider router={appRouter} />
+    </FirebaseProvider>
 );

@@ -1,9 +1,33 @@
+import { useEffect, useState } from "react";
 import AdCard from "./AdCard";
+import AdCardShimmer from "./AdCardShimmer";
+import { supabase } from "../../context/Supabase";
 
 function Body() {
+    const [adData, setAdData] = useState(null);
+
+    useEffect(() => {
+        supabase
+            .from("olxads")
+            .select()
+            .then((data) => {
+                console.log(`data Fetch Sucessful`);
+                setAdData(data.data);
+                console.log(data.data);
+            })
+            .catch((error) => {
+                console.log(`error while fetchingData`);
+                console.log(error);
+            });
+
+        return () => {
+            setAdData(null);
+        };
+    }, []);
+
     return (
         <>
-            <div className="pt-20" >
+            <div className="pt-20">
                 <div className="bg-white ">
                     <ul className="flex items-center py-3 gap-4 ps-24 shadow-md">
                         <li className="font-semibold bg-slate-300/30 rounded-md shadow-sm px-4 py-1">
@@ -29,8 +53,13 @@ function Body() {
                         All Recomendation
                     </h3>
                     <div className=" flex flex-wrap w-fit justify-start items-center gap-3">
-                        
-                        {Array(10).fill("").map(() => <AdCard/>)}
+                        {!adData
+                            ? Array(10)
+                                  .fill("")
+                                  .map((val, ind) => (
+                                      <AdCardShimmer key={ind} />
+                                  ))
+                            : adData.map(ad => <AdCard adDetails={ad}/>)}
                     </div>
                 </div>
             </div>
