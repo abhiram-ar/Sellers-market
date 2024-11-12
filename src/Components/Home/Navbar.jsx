@@ -2,16 +2,19 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SellButton from "./SellButton";
 import OlxLogo from "./utils/OlxLogo";
 import { useFirebase } from "../../context/firebase";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-
-    const { handleLogin, singOut currentUser } = useFirebase()
-
-    console.log(currentUser)
+    const { handleLogin, logOut, currentUser } = useFirebase();
+    const navigate = useNavigate()
+    
+    console.log(currentUser);
 
     return (
         <div className="bg-[#eff1f3] fixed w-screen flex gap-5 p-3 justify-center items-center shadow-sm z-10">
-            <OlxLogo />
+            <button onClick={()=> navigate("/home")}>
+                <OlxLogo />
+            </button>
 
             <div className="bg-white px-2 py-3 rounded-md border-2 border-black flex items-center gap-2 ">
                 <SearchOutlinedIcon />
@@ -38,10 +41,31 @@ const Navbar = () => {
             </select>
 
             <div className="w-fit">
-                {currentUser ? <button onClick={singOut} className="font-semibold text-lg underline"> : <button onClick={handleLogin} className="font-semibold text-lg underline">
-                }
-                    Login
-                </button>
+                {currentUser ? (
+                    <div className="flex gap-2 w-28 items-center">
+                        {" "}
+                        <img
+                            className="size-10 rounded-full "
+                            src={currentUser.photoURL}
+                            alt=""
+                        />
+                        <button
+                            onClick={logOut}
+                            className="font-semibold text-lg underline"
+                        >
+                            {" "}
+                            Signout
+                        </button>
+                    </div>
+                ) : (
+                    <button
+                        onClick={handleLogin}
+                        className="font-semibold text-lg underline"
+                    >
+                        {" "}
+                        Login
+                    </button>
+                )}
             </div>
             <div className="w-48 ">
                 <SellButton />

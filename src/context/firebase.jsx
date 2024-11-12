@@ -48,7 +48,7 @@ export const FirebaseProvider = ({ children }) => {
                 //singed in user info
                 const user = results.user;
                 console.log(user);
-                setCurrentUser(user);
+                setCurrentUser(user)
             })
             .catch((error) => {
                 console.log(`erroe while singup`, error);

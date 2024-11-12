@@ -1,7 +1,10 @@
 import Footer from "../Home/Footer";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 export default function SellerPage() {
+    const navigate = useNavigate()
+
     const {
         register,
         handleSubmit,
@@ -10,7 +13,7 @@ export default function SellerPage() {
     return (
         <div className="bg-[#f7f8f9]">
             <nav className="h-20 bg-[#f7f8f9] my-auto shadow-md">
-                <button className="size-10 mt-5 ml-10">
+                <button onClick={()=> navigate(-1)} className="size-10 mt-5 ml-10">
                     <ArrowBackOutlinedIcon fontSize="large" />
                 </button>
             </nav>
@@ -126,6 +129,7 @@ export default function SellerPage() {
                     Confirm your location
                 </label>
                 <select
+                    defaultValue="Kerala"
                     className="border-2 rounded-md px-2 py-1"
                     id="sellerState"
                     {...register("state")}
@@ -151,9 +155,7 @@ export default function SellerPage() {
                     <option value="Jammu & Kashmir">Jammu & Kashmir</option>
                     <option value="Jharkhand">Jharkhand</option>
                     <option value="Karnataka">Karnataka</option>
-                    <option selected value="Kerala">
-                        Kerala
-                    </option>
+                    <option value="Kerala">Kerala</option>
                     <option value="Lakshadweep">Lakshadweep</option>
                     <option value="Madhya Pradesh">Madhya Pradesh</option>
                     <option value="Maharashtra">Maharashtra</option>
