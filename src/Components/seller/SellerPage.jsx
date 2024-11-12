@@ -3,23 +3,44 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useFirebase } from "../../context/firebase";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import imagePlaceHolder from "./../../assets/imagePlaceholder.png";
+
 export default function SellerPage() {
-    const navigate =  useNavigate();
+    const [img1, setImg1] = useState(null);
+    const [img2, setImg2] = useState(null);
+    const [img3, setImg3] = useState(null);
+
+    const navigate = useNavigate();
     const { currentUser } = useFirebase();
 
-    console.log(currentUser)
-    useEffect(()=>{
-        if(!currentUser) navigate("/home");
+    useEffect(() => {
+        if (!currentUser) navigate("/home");
+    }, [currentUser, navigate]);
 
-    },[currentUser, navigate])
-
-    
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
+
+   
+
+    const postDataToDB = async (formData) => {
+        const images = []
+        const {image1, image2, image3} = formData
+        
+        image1.length === 1 && images.push(image1[0])
+        image2.length === 1 && images.push(image2[0]);
+        image3.length === 1 && images.push(image3[0]);
+
+        console.log(images);
+
+        const imagePaths = []
+        images.forEach(img => {
+
+        })
+    }
 
     return (
         <div className="bg-[#f7f8f9]">
@@ -36,7 +57,11 @@ export default function SellerPage() {
             </h2>
             <form
                 className="bg-white rounded-md border flex p-10 mt-3 mb-10 w-2/5 m-auto flex-col gap-2"
-                onSubmit={handleSubmit((data) => console.log(data))}
+                onSubmit={handleSubmit((data) => {
+                    console.log(img1[0])
+                    console.log(data.image1[0])
+                    postDataToDB(data)
+                })}
             >
                 {/* category */}
                 <label className="font-semibold text-lg" htmlFor="category">
@@ -53,6 +78,73 @@ export default function SellerPage() {
                     <option value="mobilelPhone">MobilePhone</option>
                     <option value="others">others</option>
                 </select>
+                <hr className="my-5" />
+
+                {/* imagesupload */}
+
+                <h2 className="text-lg font-semibold">Upload Item Pictures</h2>
+                <div className="flex ml-10 ">
+                    <div className="flex flex-col justify-center w-1/3">
+                        {
+                            <img
+                                className="size-20 rounded-md mb-2 ml-2"
+                                src={img1 ? img1[1] : imagePlaceHolder}
+                            ></img>
+                        }
+                        <input
+                            className="appearance-none text-white"
+                            type="file"
+                            {...register("image1")}
+                            onChange={(e) =>
+                                setImg1([
+                                    e.target.files[0],
+                                    URL.createObjectURL(e.target.files[0]),
+                                ])
+                            }
+                            accept="image/*"
+                        />
+                    </div>
+                    <div className="flex flex-col justify-center w-1/3">
+                        {
+                            <img
+                                className="size-20 rounded-md mb-2 ml-2"
+                                src={img2 ? img2[1] : imagePlaceHolder}
+                            ></img>
+                        }
+                        <input
+                            className="appearance-none text-white"
+                            type="file"
+                            {...register("image2")}
+                            onChange={(e) =>
+                                setImg2([
+                                    e.target.files[0],
+                                    URL.createObjectURL(e.target.files[0]),
+                                ])
+                            }
+                            accept="image/*"
+                        />
+                    </div>
+                    <div className="flex flex-col justify-center w-1/3">
+                        {
+                            <img
+                                className="size-20 rounded-md mb-2 ml-2"
+                                src={img3 ? img3[1] : imagePlaceHolder}
+                            ></img>
+                        }
+                        <input
+                            className="appearance-none text-white"
+                            type="file"
+                            {...register("image3")}
+                            onChange={(e) =>
+                                setImg3([
+                                    e.target.files[0],
+                                    URL.createObjectURL(e.target.files[0]),
+                                ])
+                            }
+                        />
+                    </div>
+                </div>
+
                 <hr className="my-5" />
                 {/* adtitle */}
                 <label htmlFor="adTitle" className="font-semibold text-lg">

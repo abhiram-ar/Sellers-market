@@ -1,11 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
-import {
-    createUserWithEmailAndPassword,
-    getAuth,
-    onAuthStateChanged,
-    signOut,
-} from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
@@ -35,7 +30,7 @@ export const FirebaseProvider = ({ children }) => {
                 setCurrentUser(user);
             } else setCurrentUser(null);
         });
-    },[currentUser]);
+    }, [currentUser]);
 
     const handleLogin = () => {
         const auth = firebaseAuth;
@@ -48,7 +43,7 @@ export const FirebaseProvider = ({ children }) => {
                 //singed in user info
                 const user = results.user;
                 console.log(user);
-                setCurrentUser(user)
+                setCurrentUser(user);
             })
             .catch((error) => {
                 console.log(`erroe while singup`, error);

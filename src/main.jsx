@@ -8,6 +8,7 @@ import Body from "./Components/Home/Body.jsx";
 import SellerPage from "./Components/seller/SellerPage.jsx";
 import { FirebaseProvider } from "./context/firebase.jsx";
 import { Redirect } from "./Components/Redirect.jsx";
+import Test from "./context/Supabase.jsx";
 
 const appRouter = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const appRouter = createBrowserRouter([
     {
         path: "/home/post",
         element: <SellerPage />,
+    },
+    {
+        path: "/test",
+        element: <Test />,
     },
 ]);
 
