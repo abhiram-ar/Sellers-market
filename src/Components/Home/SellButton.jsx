@@ -28,7 +28,7 @@ const SellButton = () => {
             { buttonHover&&  !currentUser  && (
                 <div className="flex gap-1 items-center absolute top-12 right-2 bg-yellow-400 border-2  w-[9rem] h-10 p-2 rounded-md ">
                     <InfoOutlinedIcon />
-                    <span>SignIn to sell</span>
+                    <span>Login to sell</span>
                 </div>
             )}
         </div>
