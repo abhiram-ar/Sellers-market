@@ -28,6 +28,8 @@ function Body() {
     }, []);
 
     useEffect(() => {
+        if(searchQuery !== "") return
+        
         if (filter !== "all") {
             const data = adData?.filter((ad) => ad.category === filter);
             setSearchData(data);
@@ -73,7 +75,7 @@ function Body() {
                 <div className="mx-36 mb-10 px-10 py-3 min-h-[30em] shadow-md pb-40 bg-white mt-5">
                     <h3 className="text-2xl font-semibold py-5">
                         {showSearchResult
-                            ? `Showing Result for : ${filter || searchQuery}`
+                            ? `Showing Result for : ${ searchQuery || filter}`
                             : "All Recommendation"}
                     </h3>
 

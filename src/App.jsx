@@ -18,7 +18,7 @@ export default function App() {
                         showSearchResult,
                         setShowSearchResult,
                         searchData,
-                        setSearchData
+                        setSearchData,
                     ]}
                 />
                 <Outlet
@@ -28,7 +28,7 @@ export default function App() {
                         showSearchResult,
                         setShowSearchResult,
                         searchData,
-                        setSearchData
+                        setSearchData,
                     ]}
                 />
             </DataContext>

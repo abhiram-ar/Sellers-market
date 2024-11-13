@@ -26,7 +26,7 @@ export default function DataContext({ children }) {
     }, []);
 
     return (
-        <AdDataContext.Provider value={{adData, setAdData}}>
+        <AdDataContext.Provider value={{ adData, setAdData }}>
             {children}
         </AdDataContext.Provider>
     );

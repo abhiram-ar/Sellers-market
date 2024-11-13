@@ -40,9 +40,8 @@ export default function SellerPage() {
     } = useForm();
 
     const postDataToDB = async (formData) => {
-
         setIsUploadingData(true);
-        setUploadingState("Preparing Data")
+        setUploadingState("Preparing Data");
         const images = [];
         const { image1, image2, image3 } = formData;
 
@@ -69,11 +68,11 @@ export default function SellerPage() {
         // };
 
         try {
-            setUploadingState("uploading images")
+            setUploadingState("uploading images");
             let imagePaths = await Promise.all(images);
             console.log(`imagesupload finish`);
 
-            setUploadingState("finishing up")
+            setUploadingState("finishing up");
             console.log(`uploading db record`);
             const record = {
                 category: formData.category,
@@ -95,12 +94,11 @@ export default function SellerPage() {
         } catch (errors) {
             console.log(`error uploading images or DB`, ...errors);
         } finally {
-            setUploadingState("Ad Posted ✅")
+            setUploadingState("Ad Posted ✅");
             setIsUploadingData(false);
             setTimeout(() => {
-                setUploadingState("")
+                setUploadingState("");
             }, 3000);
-           
         }
     };
 

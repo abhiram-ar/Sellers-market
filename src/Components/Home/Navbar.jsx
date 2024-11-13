@@ -18,9 +18,7 @@ const Navbar = ({ searchContext }) => {
         setSearchData,
     ] = searchContext;
     const navigate = useNavigate();
-    const location = useLocation()
-
-
+    const location = useLocation();
 
     const handleSearch = () => {
         if (searchQuery === "") return;
@@ -32,9 +30,8 @@ const Navbar = ({ searchContext }) => {
         setShowSearchResult(true);
 
         if (location.pathname !== "/home") {
-            navigate("/home")
+            navigate("/home");
         }
-
     };
 
     return (
