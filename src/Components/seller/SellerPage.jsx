@@ -131,7 +131,7 @@ export default function SellerPage() {
     return (
         <div className="bg-[#f7f8f9]">
             <div className={`${uploadingState === "" ? "hidden" : ""} `}>
-                        <Snackbar open={open} message={uploadingState} />
+                <Snackbar open={open} message={uploadingState} />
             </div>
             {isuploadingData && (
                 <div className="fixed inset-0 bg-black/40 flex justify-center items-center">
@@ -252,7 +252,7 @@ export default function SellerPage() {
                         required: true,
                         maxLength: 79,
                         minLength: 5,
-                        pattern: /^[A-Z][A-Z\s]*$/i,
+                        pattern: /^[A-Z][A-Z\s\d]*[A-Z\d]$/i,
                     })}
                     placeholder="Ad title"
                     className="border-2 rounded-md px-2 py-1"

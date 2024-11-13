@@ -25,10 +25,10 @@ function ItemPageBody(props) {
 
     return (
         <div>
-            <div className=" pt-32 mb-20 flex gap-5 mx-40">
+            <div className=" pt-24 mb-20 flex gap-5 mx-40">
                 {/* image caosal */}
                 <div className="w-2/3">
-                    <div className="relative bg-black w-full h-[35em] rounded-md overflow-hidden flex justify-center items-center">
+                    <div className="relative bg-black w-full h-[33em] rounded-t-md overflow-hidden flex justify-center items-center border">
                         <img
                             className="object-contain h-full w-full"
                             src={`https://mfoduixzqibzjxlxqkhz.supabase.co/storage/v1/object/public/olxadpics/${adDetails.pics[picIndex]}`}
@@ -51,6 +51,19 @@ function ItemPageBody(props) {
                         >
                             <ChevronRightOutlinedIcon fontSize="large" />
                         </button>
+                    </div>
+                    <div className="w-100 rounded-b-md  bg-white border flex gap-3 justify-center items-center min-h-28">
+                        {adDetails.pics.map((pic, index) => (
+                            <img
+                                key={index}
+                                className={`${
+                                    index === picIndex &&
+                                    " border-2 border-blue-400 box-content"
+                                }  p-1  size-16 hover:size-[4.5em] transition-all `}
+                                onClick={() => setPicIndex(index)}
+                                src={`https://mfoduixzqibzjxlxqkhz.supabase.co/storage/v1/object/public/olxadpics/${adDetails.pics[index]}`}
+                            ></img>
+                        ))}
                     </div>
                     <div className="bg-white p-5 border rounded-md mt-3">
                         <h2 className="text-xl font-semibold my-2 text-wrap">
