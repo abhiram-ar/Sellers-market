@@ -2,12 +2,13 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import SellButton from "./SellButton";
 import OlxLogo from "./utils/OlxLogo";
 import { useFirebase } from "../../context/firebase";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { AdDataContext } from "../../context/DataContext";
 
 const Navbar = ({ searchContext }) => {
     const { handleLogin, logOut, currentUser } = useFirebase();
+    const { adData, setAdData } = useContext(AdDataContext);
     const [
         searchQuery,
         setSearchQuery,
@@ -17,25 +18,34 @@ const Navbar = ({ searchContext }) => {
         setSearchData,
     ] = searchContext;
     const navigate = useNavigate();
-
-    const { adData, setAdData } = useContext(AdDataContext);
-
-    const handleSearch = ()=>{
-        if(searchQuery === "") return
-
-        const pattern = new RegExp(searchQuery, "i")
+    const location = useLocation()
 
 
-        const filteredData = adData.filter(ad => pattern.test(ad.ad_title))
-  
 
-        setSearchData(filteredData)
-        setShowSearchResult(true)
-    }
+    const handleSearch = () => {
+        if (searchQuery === "") return;
+
+        const pattern = new RegExp(searchQuery, "i");
+        const filteredData = adData.filter((ad) => pattern.test(ad.ad_title));
+
+        setSearchData(filteredData);
+        setShowSearchResult(true);
+
+        if (location.pathname !== "/home") {
+            navigate("/home")
+        }
+
+    };
 
     return (
         <div className="bg-[#eff1f3] fixed w-screen flex gap-5 p-3 justify-center items-center shadow-sm z-10">
-            <button onClick={() => navigate("/home")}>
+            <button
+                onClick={() => {
+                    setSearchQuery("");
+                    setShowSearchResult(false);
+                    navigate("/home");
+                }}
+            >
                 <OlxLogo />
             </button>
 

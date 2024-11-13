@@ -4,10 +4,9 @@ import AdCardShimmer from "./AdCardShimmer";
 import { supabase } from "../../context/Supabase";
 import { AdDataContext } from "../../context/DataContext";
 import { useOutletContext } from "react-router-dom";
+import QueryFailed from "./utils/QueryFailed";
 
 function Body() {
-
-
     const { adData, setAdData } = useContext(AdDataContext);
     const [
         searchQuery,
@@ -18,6 +17,13 @@ function Body() {
         setSearchData,
     ] = useOutletContext();
 
+    useEffect(()=>{
+        return ()=>{
+            setSearchQuery("")
+            setShowSearchResult(false)
+        }
+    },[])
+   
     console.log("serch query: " + searchQuery);
     console.log("search data: " + searchData);
     return (
@@ -49,23 +55,28 @@ function Body() {
                             ? `Showing Result for : ${searchQuery}`
                             : "All Recommendation"}
                     </h3>
-                    
-                    {}
-                    <div className=" flex flex-wrap w-fit justify-start items-center gap-3">
-                        {showSearchResult
-                            ? searchData?.map((ad) => (
-                                  <AdCard key={ad.id} adDetails={ad} />
-                              ))
-                            : !adData
-                            ? Array(10)
-                                  .fill("")
-                                  .map((val, ind) => (
-                                      <AdCardShimmer key={ind} />
+
+                    {showSearchResult && searchData.length === 0 ? (
+                        <div className="flex justify-center items-center">
+                            <QueryFailed />
+                        </div>
+                    ) : (
+                        <div className=" flex flex-wrap w-fit justify-start items-center gap-3">
+                            {showSearchResult
+                                ? searchData?.map((ad) => (
+                                      <AdCard key={ad.id} adDetails={ad} />
                                   ))
-                            : adData.map((ad) => (
-                                  <AdCard key={ad.id} adDetails={ad} />
-                              ))}
-                    </div>
+                                : !adData
+                                ? Array(10)
+                                      .fill("")
+                                      .map((val, ind) => (
+                                          <AdCardShimmer key={ind} />
+                                      ))
+                                : adData.map((ad) => (
+                                      <AdCard key={ad.id} adDetails={ad} />
+                                  ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </>
