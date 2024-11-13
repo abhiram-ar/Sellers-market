@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AdDataContext } from "../../context/DataContext";
 import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 
+// eslint-disable-next-line no-unused-vars
 function ItemPageBody(props) {
     const [picIndex, setPicIndex] = useState(0);
     const { id } = useParams();

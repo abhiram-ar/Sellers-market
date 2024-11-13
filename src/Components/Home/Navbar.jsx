@@ -3,7 +3,7 @@ import SellButton from "./SellButton";
 import OlxLogo from "./utils/OlxLogo";
 import { useFirebase } from "../../context/firebase";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AdDataContext } from "../../context/DataContext";
 
 const Navbar = ({ searchContext }) => {
