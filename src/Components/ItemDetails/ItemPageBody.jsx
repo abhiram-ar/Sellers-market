@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { AdDataContext } from "../../context/DataContext";
 import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
-
+import userIcon from "./../../assets/usericon.png"
 // eslint-disable-next-line no-unused-vars
 function ItemPageBody(props) {
     const [picIndex, setPicIndex] = useState(0);
@@ -94,7 +94,7 @@ function ItemPageBody(props) {
                         <div className="flex gap-5 items-center">
                             <img
                                 className="bg-black size-12 rounded-full"
-                                src=""
+                                src={userIcon}
                                 alt=""
                             />
 
