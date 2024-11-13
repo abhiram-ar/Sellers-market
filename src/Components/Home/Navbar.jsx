@@ -3,10 +3,35 @@ import SellButton from "./SellButton";
 import OlxLogo from "./utils/OlxLogo";
 import { useFirebase } from "../../context/firebase";
 import { useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { AdDataContext } from "../../context/DataContext";
 
-const Navbar = () => {
+const Navbar = ({ searchContext }) => {
     const { handleLogin, logOut, currentUser } = useFirebase();
+    const [
+        searchQuery,
+        setSearchQuery,
+        showSearchResult,
+        setShowSearchResult,
+        searchData,
+        setSearchData,
+    ] = searchContext;
     const navigate = useNavigate();
+
+    const { adData, setAdData } = useContext(AdDataContext);
+
+    const handleSearch = ()=>{
+        if(searchQuery === "") return
+
+        const pattern = new RegExp(searchQuery, "i")
+
+
+        const filteredData = adData.filter(ad => pattern.test(ad.ad_title))
+  
+
+        setSearchData(filteredData)
+        setShowSearchResult(true)
+    }
 
     return (
         <div className="bg-[#eff1f3] fixed w-screen flex gap-5 p-3 justify-center items-center shadow-sm z-10">
@@ -27,11 +52,19 @@ const Navbar = () => {
                 <input
                     className="w-full py-3 px-3 rounded-md outline-none"
                     type="text"
+                    value={searchQuery}
+                    onChange={(e) => {
+                        setSearchQuery(e.target.value);
+                        if (e.target.value === "") setShowSearchResult(false);
+                    }}
                     placeholder="Find Car, Mobile Phones and more..."
                 />
-                <div className=" bg-[#002f34] p-3 text-white">
+                <button
+                    onClick={handleSearch}
+                    className=" bg-[#002f34] p-3 text-white"
+                >
                     <SearchOutlinedIcon />
-                </div>
+                </button>
             </div>
             <select className="bg-transparent text-lg outline-none">
                 <option value="en">English</option>
