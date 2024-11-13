@@ -4,9 +4,8 @@ import { AdDataContext } from "../../context/DataContext";
 import ChevronLeftOutlinedIcon from "@mui/icons-material/ChevronLeftOutlined";
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 
-
 function ItemPageBody(props) {
-    const [picIndex, setPicIndex] = useState(0)
+    const [picIndex, setPicIndex] = useState(0);
     const { id } = useParams();
     console.log("id : " + id);
 
@@ -16,9 +15,9 @@ function ItemPageBody(props) {
     const adDetails = adData.find((ad) => ad.id === Number(id));
     console.log("ad details " + adDetails);
 
-    const handleRightClick = ()=>{
-        setPicIndex(picIndex + 1)
-    }
+    const handleRightClick = () => {
+        setPicIndex(picIndex + 1);
+    };
 
     const handleLeftClick = () => {
         setPicIndex(picIndex - 1);
@@ -35,14 +34,21 @@ function ItemPageBody(props) {
                             src={`https://mfoduixzqibzjxlxqkhz.supabase.co/storage/v1/object/public/olxadpics/${adDetails.pics[picIndex]}`}
                         />
                         <button
-                        onClick={handleLeftClick} 
-                        className={`${picIndex <= 0 && "hidden"} absolute top-[45%] h-20 w-10 rounded-full left-2 bg-zinc-800/80 text-white`}>
+                            onClick={handleLeftClick}
+                            className={`${
+                                picIndex <= 0 && "hidden"
+                            } absolute top-[45%] h-20 w-10 rounded-full left-2 bg-zinc-800/80 text-white`}
+                        >
                             <ChevronLeftOutlinedIcon fontSize="large" />
                         </button>
 
                         <button
-                        onClick={handleRightClick}
-                        className={`${picIndex >= adDetails.pics.length-1 && "hidden"} absolute top-[45%] h-20 w-10 rounded-full right-2 bg-zinc-800/80 text-white`}>
+                            onClick={handleRightClick}
+                            className={`${
+                                picIndex >= adDetails.pics.length - 1 &&
+                                "hidden"
+                            } absolute top-[45%] h-20 w-10 rounded-full right-2 bg-zinc-800/80 text-white`}
+                        >
                             <ChevronRightOutlinedIcon fontSize="large" />
                         </button>
                     </div>
