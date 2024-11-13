@@ -1,6 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import adImage from "./../../assets/adimage.png";
 
 export default function AdCard({ adDetails }) {
+    const navigate = useNavigate()
+    
+    
     const today = () => {
         let todayDate = [];
         let date = new Date();
@@ -13,7 +17,7 @@ export default function AdCard({ adDetails }) {
 
     return (
         <>
-            <div className="font-sans relative w-80 h-96 border-2 p-3 rounded-md overflow-hidden">
+            <div className="font-sans relative w-80 h-96 border-2 p-3 rounded-md overflow-hidden" onClick={()=> navigate(`/home/item/${adDetails.id}`)}>
                 <div>
                     <div className="h-48 w-full overflow-hidden">
                         <img

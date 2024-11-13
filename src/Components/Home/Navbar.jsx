@@ -6,13 +6,11 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
     const { handleLogin, logOut, currentUser } = useFirebase();
-    const navigate = useNavigate()
-    
-    console.log(currentUser);
+    const navigate = useNavigate();
 
     return (
         <div className="bg-[#eff1f3] fixed w-screen flex gap-5 p-3 justify-center items-center shadow-sm z-10">
-            <button onClick={()=> navigate("/home")}>
+            <button onClick={() => navigate("/home")}>
                 <OlxLogo />
             </button>
 

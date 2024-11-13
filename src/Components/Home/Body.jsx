@@ -1,29 +1,14 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AdCard from "./AdCard";
 import AdCardShimmer from "./AdCardShimmer";
 import { supabase } from "../../context/Supabase";
+import { AdDataContext } from "../../context/DataContext";
 
 function Body() {
-    const [adData, setAdData] = useState(null);
+    
+    const {adData, setAdData} = useContext(AdDataContext)
 
-    useEffect(() => {
-        supabase
-            .from("olxads")
-            .select()
-            .then((data) => {
-                console.log(`data Fetch Sucessful`);
-                setAdData(data.data);
-                console.log(data.data);
-            })
-            .catch((error) => {
-                console.log(`error while fetchingData`);
-                console.log(error);
-            });
-
-        return () => {
-            setAdData(null);
-        };
-    }, []);
+   
 
     return (
         <>
@@ -59,7 +44,7 @@ function Body() {
                                   .map((val, ind) => (
                                       <AdCardShimmer key={ind} />
                                   ))
-                            : adData.map(ad => <AdCard adDetails={ad}/>)}
+                            : adData.map(ad => <AdCard key={ad.id} adDetails={ad}/>)}
                     </div>
                 </div>
             </div>
