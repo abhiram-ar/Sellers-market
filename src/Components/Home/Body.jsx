@@ -28,8 +28,8 @@ function Body() {
     }, []);
 
     useEffect(() => {
-        if(searchQuery !== "") return
-        
+        if (searchQuery !== "") return;
+
         if (filter !== "all") {
             const data = adData?.filter((ad) => ad.category === filter);
             setSearchData(data);
@@ -49,7 +49,9 @@ function Body() {
                             onClick={() => {
                                 setFilter("all");
                             }}
-                            className="font-semibold bg-slate-300/30 rounded-md shadow-sm px-4 py-1"
+                            className={` ${
+                                filter === "all" && "bg-slate-300/30 shadow-sm"
+                            }  font-semibold  rounded-md  px-4 py-1`}
                         >
                             All
                         </button>
@@ -57,16 +59,37 @@ function Body() {
                             onClick={() => {
                                 setFilter("car");
                             }}
+                            className={` ${
+                                filter === "car" && "bg-slate-300/30 shadow-sm"
+                            }  font-semibold rounded-md  px-4 py-1`}
                         >
                             Cars
                         </button>
-                        <button onClick={() => setFilter("motorcycle")}>
+                        <button
+                            onClick={() => setFilter("motorcycle")}
+                            className={` ${
+                                filter === "motorcycle" &&
+                                "bg-slate-300/30 shadow-sm"
+                            }  font-semibold rounded-md  px-4 py-1`}
+                        >
                             Motorcycles
                         </button>
-                        <button onClick={() => setFilter("mobilelPhone")}>
+                        <button
+                            onClick={() => setFilter("mobilelPhone")}
+                            className={` ${
+                                filter === "mobilelPhone" &&
+                                "bg-slate-300/30 shadow-sm"
+                            }  font-semibold rounded-md  px-4 py-1`}
+                        >
                             MobilePhone
                         </button>
-                        <button onClick={() => setFilter("others")}>
+                        <button
+                            onClick={() => setFilter("others")}
+                            className={` ${
+                                filter === "others" &&
+                                "bg-slate-300/30 shadow-sm"
+                            }  font-semibold rounded-md px-4 py-1`}
+                        >
                             Others
                         </button>
                     </div>
@@ -75,7 +98,7 @@ function Body() {
                 <div className="mx-36 mb-10 px-10 py-3 min-h-[30em] shadow-md pb-40 bg-white mt-5">
                     <h3 className="text-2xl font-semibold py-5">
                         {showSearchResult
-                            ? `Showing Result for : ${ searchQuery || filter}`
+                            ? `Showing Result for : ${searchQuery || filter}`
                             : "All Recommendation"}
                     </h3>
 
